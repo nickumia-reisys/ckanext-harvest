@@ -3,7 +3,6 @@ from ckan.plugins import toolkit as pt
 from ckanext.harvest.logic.auth import get_job_object
 
 
-
 def auth_allow_anonymous_access(auth_function):
     '''
         Local version of the auth_allow_anonymous_access decorator that only
@@ -42,6 +41,7 @@ def harvest_source_show(context, data_dict):
                 'msg': pt._('User {0} not authorized to read harvest source {1}')
                 .format(user, source_id)}
 
+
 @auth_allow_anonymous_access
 def harvest_source_show_status(context, data_dict):
     '''
@@ -50,6 +50,7 @@ def harvest_source_show_status(context, data_dict):
         It forwards the checks to harvest_source_show.
     '''
     return harvest_source_show(context, data_dict)
+
 
 @auth_allow_anonymous_access
 def harvest_source_list(context, data_dict):
@@ -105,7 +106,6 @@ def harvest_job_list(context, data_dict):
                 .format(user, source_id)}
 
 
-
 @auth_allow_anonymous_access
 def harvest_object_show(context, data_dict):
     '''
@@ -132,3 +132,8 @@ def harvesters_info_show(context, data_dict):
         Everybody can do it
     '''
     return {'success': True}
+
+
+def harvest_get_notifications_recipients(context, data_dict):
+    # Only sysadmins can access this
+    return {'success': False}
